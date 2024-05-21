@@ -8,7 +8,7 @@ class TourController extends GetxController {
   getTours() async {
     tours = [
       Tour(
-          id: "1",
+          id: 1,
           currency: "COP",
           name: "dolor purus non enim praesent elementum facilisis leo vel",
           image: "https://picsum.photos/400/200",
@@ -19,7 +19,7 @@ class TourController extends GetxController {
           location: "New York",
           price: "240000"),
       Tour(
-          id: "2",
+          id: 2,
           currency: "COP",
           name: "turpis in eu mi bibendum neque egestas congue quisque",
           image: "https://picsum.photos/400/200",

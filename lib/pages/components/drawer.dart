@@ -26,6 +26,7 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text('Home'),
             onTap: () {
+              Navigator.pop(context); 
               Get.toNamed('/home');
             },
           ),
@@ -33,6 +34,7 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.person),
             title: const Text('Perfil'),
             onTap: () {
+              Navigator.pop(context); 
               Get.toNamed('/profile');
             },
           ),
@@ -40,7 +42,8 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.settings),
             title: const Text('Settings'),
             onTap: () {
-              Get.toNamed('/setting');
+              Navigator.pop(context); 
+              Get.toNamed('/settings');
             },
           ),
         ],

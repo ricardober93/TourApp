@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class UserController extends GetxController{
   
-  var user = false;
+  var user = true;
   final loadingWithOutUser = false.obs;
   
   void showLoading(){

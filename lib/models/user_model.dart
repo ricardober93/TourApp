@@ -1,19 +1,23 @@
 class UserModel {
-  String name = '';
-  String email = '';
-  String password = '';
-  String confirmPassword = '';
-  String phone = '';
-  String address = '';
+  int id;
+  String name;
+  String email;
+  String password;
+  String confirmPassword;
+  String phone;
+  String address;
+  Rol role;
 
-  constructor({name, email, password, confirmPassword, phone, address}) {
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.confirmPassword = confirmPassword;
-    this.phone = phone;
-    this.address = address;
-  }
+  UserModel({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.password,
+    required this.confirmPassword,
+    required this.phone,
+    required this.address,
+    required this.role,
+  });
 
   validate() {
     return true;
@@ -23,3 +27,5 @@ class UserModel {
     return true;
   }
 }
+
+enum Rol { admin, user }

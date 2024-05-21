@@ -7,12 +7,11 @@ class Tour {
   String date = '';
   String location = '';
   String duration = '';
-  
-  String id = '';
+
+  int id;
 
   Tour(
-      {
-      required this.id,
+      {required this.id,
       required this.name,
       required this.description,
       required this.image,
@@ -21,5 +20,4 @@ class Tour {
       required this.date,
       required this.location,
       required this.duration});
-
 }

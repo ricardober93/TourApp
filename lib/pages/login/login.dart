@@ -21,6 +21,8 @@ class Login extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
+               const  Text('Bienvenido a TourApp', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,)),
+                const SizedBox(height: 16),
                 TextField(
                   decoration: const InputDecoration(
                     labelText: 'Username',
