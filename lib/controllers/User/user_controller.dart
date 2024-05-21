@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
-import 'package:myapp/pages/home/home.dart';
 
 class UserController extends GetxController{
   
-  var user = true;
+  var user = false;
   final loadingWithOutUser = false.obs;
   
   void showLoading(){
@@ -19,7 +18,11 @@ class UserController extends GetxController{
 
     Future.delayed(const Duration(seconds: 3), () {
       hideLoading();
-       Get.to(const Home());
+     if (user) {
+       Get.toNamed('/home');
+     }else{
+      Get.toNamed('/login');
+     }
     });
 
     super.onInit();

@@ -1,14 +1,14 @@
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/models/tour_model.dart';
 import 'package:myapp/pages/components/size_component.dart';
 import 'package:myapp/utils/string_extension.dart';
 
 class TourCard extends StatelessWidget {
-
   final Tour tour;
-  const TourCard({super.key, required this.tour});
+
+  final Function onTap;
+
+  const TourCard({super.key, required this.tour, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -22,58 +22,57 @@ class TourCard extends StatelessWidget {
             alignment: Alignment.topCenter,
             children: [
               GestureDetector(
-                onTap: () {
-                  if (kDebugMode) {
-                    print('Tour ${tour.name}');
-                  }
-                },
+                onTap: () => onTap(tour.id),
                 child: Column(
                   children: [
                     SizedContainer(
-                      child: Image.network(tour.image,
-                          fit: BoxFit.cover,
-                          ),
+                      child: Image.network(
+                        tour.image,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
                       child: Column(
                         children: [
                           Text(
-                           tour.name,
+                            tour.name,
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.left,
                           ),
-                           const SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                tour.price.formatAsCurrency(symbol: tour.currency),
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  tour.price
+                                      .formatAsCurrency(symbol: tour.currency),
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                          ),
-                          Text(
-                            tour.duration.formatDuration(),
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ]),
+                                Text(
+                                  tour.duration.formatDuration(),
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ]),
                           const SizedBox(height: 5),
-                          Text( tour.description ,
+                          Text(
+                            tour.description,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.normal,
                             ),
                             textAlign: TextAlign.left,
                           ),
-                         
                         ],
                       ),
                     )
@@ -81,12 +80,12 @@ class TourCard extends StatelessWidget {
                 ),
               ),
               Positioned.directional(
-                end: 2,
+                end: 5,
                 top: 5,
                 textDirection: TextDirection.ltr,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Color(0x84FFFFFF),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(99),
                   ),
                   child: IconButton(
@@ -96,9 +95,7 @@ class TourCard extends StatelessWidget {
                       color: Colors.red,
                     ),
                     onPressed: () {
-                     if (kDebugMode) {
-                       print('Favorite');
-                     }
+                      print('Favorite');
                     },
                   ),
                 ),
@@ -107,5 +104,4 @@ class TourCard extends StatelessWidget {
           ),
         ));
   }
-
 }
