@@ -14,7 +14,7 @@ class HomeAdmin extends StatelessWidget {
     return Scaffold(
        drawer: const DrawerAdmin(),
         appBar: AppBar(
-          title: Text('Admin'),
+          title: const Text('Admin'),
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,

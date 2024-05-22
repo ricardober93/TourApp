@@ -77,7 +77,7 @@ class TourAdmin extends StatelessWidget {
                   onPressed: () {
                     Get.bottomSheet(CreateTour( controller: controller, ));
                   },
-                  child: Text('Add new Tour')),
+                  child: const Text('Add new Tour')),
             ),
           )
         ],

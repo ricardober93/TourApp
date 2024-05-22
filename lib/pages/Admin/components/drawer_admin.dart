@@ -38,6 +38,14 @@ class DrawerAdmin extends StatelessWidget {
               Get.toNamed('/admin/tour');
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.book),
+            title: const Text('Reservas'),
+            onTap: () {
+              Navigator.pop(context); 
+              Get.toNamed('/admin/reservas');
+            },
+          ),
           
         ],
       ),

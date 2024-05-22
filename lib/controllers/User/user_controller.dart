@@ -2,9 +2,10 @@ import 'package:get/get.dart';
 import 'package:myapp/models/user_model.dart';
 
 class UserController extends GetxController {
-  UserModel user = UserModel(
-      id: 0, name: '', email: '', phone: '', address: '', role: Rol.admin);
-  final loadingWithOutUser = false.obs;
+ //  UserModel user = UserModel(id: 0, name: '', email: '', phone: '', address: '', role: Rol.admin);
+ 
+  UserModel? user;
+  var  loadingWithOutUser = false.obs;
 
   void showLoading() {
     loadingWithOutUser.value = true;
@@ -18,9 +19,9 @@ class UserController extends GetxController {
   void onInit() async {
     Future.delayed(const Duration(seconds: 3), () {
       hideLoading();
-      if (user.role == Rol.user) {
+      if (user?.role == Rol.user) {
         Get.toNamed('/home');
-      } else if (user.role == Rol.admin) {
+      } else if (user?.role == Rol.admin) {
         Get.toNamed('/admin');
       } else {
         Get.toNamed('/login');
