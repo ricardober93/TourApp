@@ -5,7 +5,7 @@ import 'package:myapp/models/tour_model.dart';
 class TourController extends GetxController {
   List<Tour> tours = [];
 
-  getTours() async {
+  getTours()  {
     tours = [
       Tour(
           id: 1,

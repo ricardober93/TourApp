@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myapp/pages/Admin/Home/home_admin.dart';
+import 'package:myapp/pages/Admin/Tour/tour_admin.dart';
 import 'package:myapp/pages/LoadingScreen/loading_screen.dart';
 import 'package:myapp/pages/Settings/settings.dart';
 import 'package:myapp/pages/home/home.dart';
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      return GetMaterialApp(
-      initialRoute: '/',
+      initialRoute: '/admin/tour',
       getPages: [
         GetPage(name: '/', page: () => const LoadingScreen()),
         GetPage(name: '/home', page: () => const Home()),
@@ -28,6 +30,13 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/login', page: () => const Login()),
         GetPage(name: '/profile', page: () => const Profile()),
         GetPage(name: '/settings', page: () => const Settings()),
+        GetPage(
+          name: '/admin',
+          page: () => const HomeAdmin(),
+          transition: Transition.native,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(name: '/admin/tour', page: () => const TourAdmin()),
       ],
     );
   }

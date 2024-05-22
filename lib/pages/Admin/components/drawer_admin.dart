@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MyDrawer extends StatelessWidget {
-  const MyDrawer({super.key});
+class DrawerAdmin extends StatelessWidget {
+  const DrawerAdmin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class MyDrawer extends StatelessWidget {
               color: Colors.blueGrey,
             ),
             child: Text(
-              'Perfil',
+              'Admin',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -23,29 +23,22 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('Home'),
+            leading: const Icon(Icons.admin_panel_settings),
+            title: const Text('Admin'),
             onTap: () {
               Navigator.pop(context); 
-              Get.toNamed('/home');
+              Get.toNamed('/admin');
             },
           ),
           ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('Perfil'),
+            leading: const Icon(Icons.tour),
+            title: const Text('Toures'),
             onTap: () {
               Navigator.pop(context); 
-              Get.toNamed('/profile');
+              Get.toNamed('/admin/tour');
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
-            onTap: () {
-              Navigator.pop(context); 
-              Get.toNamed('/settings');
-            },
-          ),
+          
         ],
       ),
     );
