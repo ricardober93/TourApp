@@ -1,45 +1,35 @@
-
 import 'package:get/get.dart';
 import 'package:myapp/models/tour_model.dart';
+import 'package:myapp/utils/string_extension.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TourController extends GetxController {
-  List<Tour> tours = [];
+  Rx<List<Tour>> tours = Rx<List<Tour>>([]);
 
-  getTours()  {
-    tours = [
-      Tour(
-          id: 1,
-          currency: "COP",
-          name: "dolor purus non enim praesent elementum facilisis leo vel",
-          image: "https://picsum.photos/400/200",
-          date: "2021-10-10",
-          description:
-              "lacus laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean et tortor at risus viverra adipiscing at in tellus integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque",
-          duration: "1",
-          location: "New York",
-          price: "240000"),
-      Tour(
-          id: 2,
-          currency: "COP",
-          name: "turpis in eu mi bibendum neque egestas congue quisque",
-          image: "https://picsum.photos/400/200",
-          date: "2021-10-10",
-          description:
-              "lacus laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean et tortor at risus viverra adipiscing at in tellus integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque",
-          duration: "2",
-          location: "San Juan del Cesar",
-          price: "360000")
-    ];
+  final SupabaseClient client = Supabase.instance.client;
+
+  getTours() async {
+    var res = await client.from('tours').select('*');
+
+        tours.value.clear();
+
+    for (var element in res) {
+      tours.value.add(Tour.fromJson(element));
+    }
+
+    tours.refresh();
   }
 
-  navigateSinglertour(String tourId) {
-    Get.toNamed("/tour/$tourId");
+  navigateSinglertour(int tourId) {
+    Get.toNamed("/tour/${tourId.toString()}");
   }
 
-  getSingleTour(){
+  getSingleTour() {
     String? tourId = Get.parameters['tourId'] ?? "";
+
     if (tourId.isNotEmpty) {
-    return tours.firstWhere((element) => element.id == tourId);
+      return tours.value
+          .firstWhere((element) => element.id == tourId.toNumber());
     }
     return null;
   }

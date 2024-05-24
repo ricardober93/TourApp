@@ -10,7 +10,9 @@ class TourAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.put(TourAdminController());
-    var tours = controller.tours;
+
+    controller.onInit();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(' Toures - Admin'),
@@ -23,13 +25,11 @@ class TourAdmin extends StatelessWidget {
           Obx(() {
             return ListView.builder(
               itemBuilder: (context, index) {
-                var tour = tours[index];
+                var tour = controller.tours.value[index];
                 return Dismissible(
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
-                    print('direction $direction');
                     controller.deleteTour(tour.id);
-                    Get.snackbar('Tour Deleted', 'Tour Deleted Successfully');
                   },
                   key: Key(tour.id.toString()),
                   background: Container(
@@ -41,7 +41,6 @@ class TourAdmin extends StatelessWidget {
                   child: ListTile(
                     onTap: () {
                       controller.selectItem(tour);
-
                       Get.bottomSheet(EditTour( controller: controller,));
                     },
                     contentPadding: const EdgeInsets.all(4),
@@ -59,7 +58,7 @@ class TourAdmin extends StatelessWidget {
                   ),
                 );
               },
-              itemCount: tours.length,
+              itemCount: controller.tours.value.length,
             );
           }),
           Positioned(

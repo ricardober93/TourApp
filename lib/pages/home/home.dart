@@ -12,7 +12,7 @@ class Home extends StatelessWidget {
     var controller = Get.put(TourController());
     controller.onInit();
 
-    navigateSingleTour(String tourId) {
+    navigateSingleTour(int tourId) {
       controller.navigateSinglertour(tourId);
     }
 
@@ -23,14 +23,17 @@ class Home extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
+          child: 
+           Obx(() {
+            return ListView.builder(
             padding: const EdgeInsets.all(8),
             itemBuilder: (context, index) {
-              final tour = controller.tours[index];
+              final tour = controller.tours.value[index];
               return TourCard(tour: tour, onTap: navigateSingleTour );
             },
-            itemCount: controller.tours.length,
-          ),
+            itemCount: controller.tours.value.length,
+          );
+           }),
         ));
   }
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:3767388960.

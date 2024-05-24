@@ -48,6 +48,14 @@ class CreateTour extends StatelessWidget {
                 labelText: 'precio',
               ),
             ),
+
+              TextField(
+              maxLines: null,
+              controller: controller.locationController,
+              decoration: const InputDecoration(
+                labelText: 'location',
+              ),
+            ),
           
             TextField(
               maxLines: null,

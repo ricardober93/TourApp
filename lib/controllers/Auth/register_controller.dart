@@ -41,13 +41,12 @@ class RegisterController extends GetxController {
        emailController.value.text,
       emailController.value.text,
     );
-
     
     userController.session = res.session;
     userController.user = res.user;
 
-    storageController.saveData('user', res.user.toString());
-    storageController.saveData('session', res.session.toString());
+    storageController.saveData('token', res.session!.accessToken);
+    storageController.saveData('refreshtoken', res.session!.refreshToken ?? '');
 
     isLoading.value = false;
 

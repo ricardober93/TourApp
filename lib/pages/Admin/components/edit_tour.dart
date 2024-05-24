@@ -48,6 +48,14 @@ class EditTour extends StatelessWidget {
                 labelText: 'precio',
               ),
             ),
+
+            TextField(
+              maxLines: null,
+              controller: controller.locationController,
+              decoration: const InputDecoration(
+                labelText: 'lugar',
+              ),
+            ),
           
             TextField(
               maxLines: null,

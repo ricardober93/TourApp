@@ -1,32 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/models/tour_model.dart';
+import 'package:myapp/utils/string_extension.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TourAdminController extends GetxController {
-  var tours = [
-    Tour(
-        id: 1,
-        currency: "COP",
-        name: "dolor purus non enim praesent elementum facilisis leo vel",
-        image: "https://picsum.photos/400/200",
-        date: "2021-10-10",
-        description:
-            "lacus laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean et tortor at risus viverra adipiscing at in tellus integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque",
-        duration: "1",
-        location: "New York",
-        price: "240000"),
-    Tour(
-        id: 2,
-        currency: "COP",
-        name: "turpis in eu mi bibendum neque egestas congue quisque",
-        image: "https://picsum.photos/400/200",
-        date: "2021-10-10",
-        description:
-            "lacus laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean et tortor at risus viverra adipiscing at in tellus integer feugiat scelerisque varius morbi enim nunc faucibus a pellentesque",
-        duration: "2",
-        location: "San Juan del Cesar",
-        price: "360000")
-  ].obs;
+   Rx<List<Tour>> tours = Rx<List<Tour>>([]);
+
+    final SupabaseClient client = Supabase.instance.client;
 
   var selectedTour = Rxn<Tour>();
   var nameController = TextEditingController();
@@ -36,9 +17,34 @@ class TourAdminController extends GetxController {
   var durationController = TextEditingController();
   var descriptionController = TextEditingController();
 
-  void addTour() {
+  @override
+  void onInit() {
+    super.onInit();
+    getTours();
+  }
+
+
+ getTours() async {
+
+    var res = await client.from('tours').select('*');
+
+
+    tours.value.clear();
+
+    for (var element in res) {
+      tours.value = [
+        ...tours.value,
+        Tour.fromJson(element),
+      ];
+    }
+
+    tours.refresh();
+  }
+
+
+  void addTour() async {
     var newTour = Tour(
-      id: tours.length + 1,
+      id: tours.value.length + 1,
       currency: "COP",
       name: nameController.text,
       image: "https://picsum.photos/400/200",
@@ -48,9 +54,13 @@ class TourAdminController extends GetxController {
       description: descriptionController.text,
       duration: durationController.text,
       location: locationController.text,
-      price: priceController.text,
+      price: priceController.text.toDouble(),
     );
-    tours.add(newTour);
+    tours.value.add(newTour);
+    tours.refresh();
+    
+
+   await client.from('tours').insert(newTour.toJson());
 
     clearItem();
     Get.back();
@@ -68,7 +78,7 @@ class TourAdminController extends GetxController {
     selectedTour.value = item;
     nameController.text = item.name;
     descriptionController.text = item.description;
-    priceController.text = item.price;
+    priceController.text = item.price.toString();
     locationController.text = item.location;
     durationController.text = item.duration;
     dateController.text = item.date;
@@ -84,9 +94,9 @@ class TourAdminController extends GetxController {
     durationController.clear();
   }
 
-  void updateSelectedItem() {
+  void updateSelectedItem() async  {
     if (selectedTour.value != null) {
-      Get.back(closeOverlays: true, canPop: true); // Close the editing form
+      Get.back(); // Close the editing form
       selectedTour.value!.name = nameController.text;
       selectedTour.value!.description = descriptionController.text;
       selectedTour.value!.date = (dateController.text.isNotEmpty
@@ -94,7 +104,9 @@ class TourAdminController extends GetxController {
           : null)!;
       selectedTour.value!.duration = durationController.text;
       selectedTour.value!.location = locationController.text;
-      selectedTour.value!.price = priceController.text;
+      selectedTour.value!.price = priceController.text.toDouble();
+
+      await client.from('tours').update(selectedTour.value!.toJson()).eq('id', selectedTour.value!.id);
 
       Get.snackbar(
         "Tour updated",
@@ -133,7 +145,18 @@ class TourAdminController extends GetxController {
     super.onClose();
   }
 
-  void deleteTour(int id) {
-    tours.removeWhere((tour) => tour.id == id);
+  void deleteTour(int id) async {
+    tours.value.removeWhere((tour) => tour.id == id);
+
+   await client.from('tours').delete().eq('id', id);
+
+    Get.snackbar(
+      "Tour deleted",
+      "The tour has been deleted successfully",
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+    );
+    tours.refresh();
   }
 }

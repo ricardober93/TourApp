@@ -13,4 +13,12 @@ extension StringExtension on String {
     var duration = Duration(days: int.parse(this)).inDays;
     return  duration > 1 ? "$duration days" : "$duration day";
   }
+
+  int toNumber(){
+    return int.parse(this);
+  }
+
+  double toDouble(){
+    return double.parse(this);
+  }
 }

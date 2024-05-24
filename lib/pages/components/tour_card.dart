@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/models/tour_model.dart';
 import 'package:myapp/pages/components/size_component.dart';
+import 'package:myapp/utils/double_extension.dart';
 import 'package:myapp/utils/string_extension.dart';
 
 class TourCard extends StatelessWidget {

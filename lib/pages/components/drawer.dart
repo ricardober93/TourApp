@@ -17,7 +17,7 @@ class MyDrawer extends StatelessWidget {
               color: Colors.blueGrey,
             ),
             child: Text(
-              userController?.user?.email ?? '',
+              userController?.user?.email ?? "",
               style: const  TextStyle(
                 color: Colors.white,
                 fontSize: 24,

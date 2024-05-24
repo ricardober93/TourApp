@@ -16,7 +16,6 @@ class LoginController extends GetxController {
   void login() async {
     errorMessage.value = '';
 
-    print('login');
 
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       errorMessage.value = 'Please fill in all fields';
@@ -32,7 +31,6 @@ class LoginController extends GetxController {
       passwordController.value.text,
     );
   
-    print('userController.role.value ${userController.role.value}');
 
     if(userController.role.value == 'user') {
       Get.offAllNamed('/home');
@@ -44,7 +42,6 @@ class LoginController extends GetxController {
     isLoading.value = false;
 
     } catch (e) {
-      print(e);
        isLoading.value = false;
       errorMessage.value = 'Invalid email or password';
     }
