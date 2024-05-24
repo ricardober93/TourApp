@@ -7,6 +7,7 @@ class Register extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     RegisterController registerCtr = Get.put(RegisterController());
 
     return Scaffold(
@@ -38,8 +39,10 @@ class Register extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               )),
                           TextField(
+                            
+                             keyboardType: TextInputType.emailAddress,
                             decoration: const InputDecoration(
-                              labelText: 'email',
+                              labelText: 'Email',
                               border: OutlineInputBorder(),
                             ),
                             controller: registerCtr.emailController,

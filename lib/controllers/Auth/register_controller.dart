@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myapp/controllers/User/user_controller.dart';
+import 'package:myapp/controllers/storage/storage_controller.dart';
 
 class RegisterController extends GetxController {
+  UserController userController = Get.put(UserController());
+  StorageController storageController = Get.put(StorageController());
+ 
+
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var confirmPasswordController = TextEditingController();
   var isLoading = false.obs;
   var errorMessage = ''.obs;
 
-    @override
+  @override
   void onClose() {
     emailController.dispose();
     passwordController.dispose();
@@ -16,7 +22,9 @@ class RegisterController extends GetxController {
     super.onClose();
   }
 
-   void register() async {
+  void register() async {
+    errorMessage.value = '';
+
     if (passwordController.text != confirmPasswordController.text) {
       errorMessage.value = 'Passwords do not match';
       return;
@@ -29,19 +37,42 @@ class RegisterController extends GetxController {
 
     // Simulate a network call
     isLoading.value = true;
-    await Future.delayed(Duration(seconds: 2));
+    var res = await userController.signUpWithEmailAndPassword(
+       emailController.value.text,
+      emailController.value.text,
+    );
+
+    
+    userController.session = res.session;
+    userController.user = res.user;
+
+    storageController.saveData('user', res.user.toString());
+    storageController.saveData('session', res.session.toString());
+
     isLoading.value = false;
 
+    var role = await userController.getUserRole(userController.user!.id);
+
+    if( role!.isEmpty){
+      Get.toNamed('/login');
+      return;
+    }
+
     // Simulate registration success
-    if (emailController.value.text == 'admin' && passwordController.value.text == 'admin') {
+    if ( role == 'super_admin') {
       Get.toNamed('/admin');
-    }else{
+    } else {
       Get.toNamed('/home');
     }
   }
 
-
   void navigateToLogin() {
-     Get.toNamed('/login');
+    Get.toNamed('/login');
   }
+
+
+  
+
 }
+
+
