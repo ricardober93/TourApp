@@ -16,6 +16,11 @@ class Home extends StatelessWidget {
       controller.navigateSinglertour(tourId);
     }
 
+    favorited(int tourId) {
+      print(tourId);
+      controller.favorited(tourId);
+    }
+
     return Scaffold(
        drawer: const MyDrawer(),
         appBar: AppBar(
@@ -29,7 +34,7 @@ class Home extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             itemBuilder: (context, index) {
               final tour = controller.tours.value[index];
-              return TourCard(tour: tour, onTap: navigateSingleTour );
+              return TourCard(tour: tour, onTap: navigateSingleTour, onFavorite: favorited );
             },
             itemCount: controller.tours.value.length,
           );

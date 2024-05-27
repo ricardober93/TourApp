@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:myapp/controllers/Favorites/favorites.dart';
 import 'package:myapp/models/tour_model.dart';
 import 'package:myapp/pages/components/size_component.dart';
 import 'package:myapp/utils/double_extension.dart';
@@ -9,10 +11,17 @@ class TourCard extends StatelessWidget {
 
   final Function onTap;
 
-  const TourCard({super.key, required this.tour, required this.onTap});
+  final Function onFavorite;
+
+  const TourCard(
+      {super.key,
+      required this.tour,
+      required this.onTap,
+      required this.onFavorite});
 
   @override
   Widget build(BuildContext context) {
+    FavoritesController favoriteController = Get.put(FavoritesController());
     return Card(
         elevation: 5,
         semanticContainer: true,
@@ -89,16 +98,23 @@ class TourCard extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(99),
                   ),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.favorite_border_outlined,
-                      size: 30,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {
-                      print('Favorite');
-                    },
-                  ),
+                  child: Obx(() {
+                    final isFavorited = favoriteController.getFavorite(tour.id.toString()) ?? false;
+                    return IconButton(
+                      icon: isFavorited
+                          ? const Icon(
+                              Icons.favorite,
+                              size: 30,
+                              color: Colors.red,
+                            )
+                          : const Icon(
+                              Icons.favorite_border_outlined,
+                              size: 30,
+                              color: Colors.red,
+                            ),
+                      onPressed: () => onFavorite(tour.id),
+                    );
+                  }),
                 ),
               ),
             ],
