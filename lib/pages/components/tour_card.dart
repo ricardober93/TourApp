@@ -22,6 +22,8 @@ class TourCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FavoritesController favoriteController = Get.put(FavoritesController());
+
+    favoriteController.onInit();
     return Card(
         elevation: 5,
         semanticContainer: true,
@@ -99,7 +101,7 @@ class TourCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(99),
                   ),
                   child: Obx(() {
-                    final isFavorited = favoriteController.getFavorite(tour.id.toString()) ?? false;
+                    bool isFavorited = favoriteController.isFavorite(tour.id);
                     return IconButton(
                       icon: isFavorited
                           ? const Icon(

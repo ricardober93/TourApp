@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myapp/controllers/Favorites/favorites.dart';
 import 'package:myapp/controllers/Tour/tour_controller.dart';
 import 'package:myapp/pages/components/drawer.dart';
 import 'package:myapp/pages/components/tour_card.dart';
@@ -11,13 +12,13 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.put(TourController());
     controller.onInit();
-
+     var favoriteController = Get.put(FavoritesController());
+    favoriteController.onInit();
     navigateSingleTour(int tourId) {
       controller.navigateSinglertour(tourId);
     }
 
     favorited(int tourId) {
-      print(tourId);
       controller.favorited(tourId);
     }
 

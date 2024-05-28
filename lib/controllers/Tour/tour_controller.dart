@@ -41,20 +41,19 @@ class TourController extends GetxController {
 
   @override
   void onInit() {
-    favoriteController.getAllFavorites();
     getTours();
     super.onInit();
   }
 
   void favorited(int tourId) async {
     final userId = userController.user?.id ?? ""; 
-    final isFavorite = favoriteController.getFavorite(tourId.toString()) ?? false;
+    final isFavorite = favoriteController.isFavorite(tourId);
   
     if (userId.isNotEmpty && !isFavorite ) {
-      favoriteController.setFavorite(tourId.toString(), userId);
+      favoriteController.setFavorite(tourId, userId);
     }  
     if ( userId.isNotEmpty && isFavorite) {
-      favoriteController.deleteFavorite(tourId.toString(), userId);
+      favoriteController.deleteFavorite(tourId, userId);
     }
   }
 }
