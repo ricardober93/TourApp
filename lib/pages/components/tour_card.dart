@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/controllers/Favorites/favorites.dart';
+import 'package:myapp/controllers/Favorites/favorites_controller.dart';
 import 'package:myapp/models/tour_model.dart';
 import 'package:myapp/pages/components/size_component.dart';
 import 'package:myapp/utils/double_extension.dart';

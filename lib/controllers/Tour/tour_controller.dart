@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:myapp/controllers/Favorites/favorites.dart';
+import 'package:myapp/controllers/Favorites/favorites_controller.dart';
 import 'package:myapp/controllers/User/user_controller.dart';
 import 'package:myapp/models/tour_model.dart';
 import 'package:myapp/utils/string_extension.dart';
@@ -29,10 +29,11 @@ class TourController extends GetxController {
     Get.toNamed("/tour/${tourId.toString()}");
   }
 
-  getSingleTour() {
+  getSingleTour()  {
     String? tourId = Get.parameters['tourId'] ?? "";
 
     if (tourId.isNotEmpty) {
+
       return tours.value
           .firstWhere((element) => element.id == tourId.toNumber());
     }

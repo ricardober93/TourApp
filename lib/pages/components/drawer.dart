@@ -32,6 +32,14 @@ class MyDrawer extends StatelessWidget {
               Get.toNamed('/home');
             },
           ),
+           ListTile(
+            leading: const Icon(Icons.bookmark),
+            title: const Text('Reservas'),
+            onTap: () {
+              Navigator.pop(context); 
+              Get.toNamed('/bookings');
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text('Perfil'),

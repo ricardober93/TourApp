@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/controllers/Tour/tour_controller.dart';
 import 'package:myapp/models/tour_model.dart';
+import 'package:myapp/pages/Admin/components/create_booking.dart';
 import 'package:myapp/utils/double_extension.dart';
 import 'package:myapp/utils/string_extension.dart';
 
@@ -73,7 +74,9 @@ class SingleTour extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.bottomSheet(CreateBooking(tour: tour));
+                  },
                   child: const Text('Book Now'),
                 ),
               ),

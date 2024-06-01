@@ -7,6 +7,7 @@ import 'package:myapp/pages/Admin/Tour/tour_admin.dart';
 import 'package:myapp/pages/Admin/reservas/reservas_admin.dart';
 import 'package:myapp/pages/LoadingScreen/loading_screen.dart';
 import 'package:myapp/pages/Settings/settings.dart';
+import 'package:myapp/pages/booking/booking.dart';
 import 'package:myapp/pages/home/home.dart';
 import 'package:myapp/pages/login/login.dart';
 import 'package:myapp/pages/profile/profile.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/', page: () => const LoadingScreen()),
         GetPage(name: '/home', page: () => const Home()),
+         GetPage(name: '/bookings', page: () => const Bookings()),
         GetPage(
           name: '/tour/:tourId',
           page: () => const SingleTour(),

@@ -2,11 +2,17 @@ import 'package:intl/intl.dart';
 
 extension StringExtension on String {
   String formatAsCurrency({String locale = 'es_CO', String symbol = '\$'}) {
-    double value = double.tryParse(this) ?? 0.0;
+    int value = int.parse(this);
     NumberFormat currencyFormatter =
         NumberFormat.currency(locale: locale, symbol: symbol);
 
     return currencyFormatter.format(value);
+  }
+
+  String formatAsDate({String format = 'yyyy-MM-dd'}) {
+    DateTime date = DateTime.parse(this);
+    DateFormat formatter = DateFormat(format);
+    return formatter.format(date);
   }
 
   formatDuration() {
@@ -14,7 +20,7 @@ extension StringExtension on String {
     return  duration > 1 ? "$duration days" : "$duration day";
   }
 
-  int toNumber(){
+   int toNumber(){
     return int.parse(this);
   }
 
