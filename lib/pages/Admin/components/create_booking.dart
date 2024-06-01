@@ -7,12 +7,18 @@ import 'package:myapp/models/tour_model.dart';
 class CreateBooking extends StatelessWidget {
   final controller = Get.put(BookingController());
 
+
   final Tour tour;
 
   CreateBooking({super.key, required this.tour});
 
   @override
   Widget build(BuildContext context) {
+
+      controller.dateController.text = DateTime.now().toString().substring(0, 10);
+      controller.totalPriceController.text = tour.price.toString().split('.')[0];
+      controller.numberPeopleController.text = '1';
+
     return Container(
       height: MediaQuery.of(context).size.height * 0.8,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
@@ -32,14 +38,12 @@ class CreateBooking extends StatelessWidget {
           children: [
             TextField(
               controller: controller.numberPeopleController,
-              maxLines: null,
-               onChanged: (value) => controller.calculateTotalPrice(tour.price),
+               onChanged: (value) => controller.calculateTotalPrice(),
               decoration: const InputDecoration(
                 labelText: 'Numero de personas',
               ),
             ),
             TextField(
-              maxLines: null,
               enabled: false,
               controller: controller.totalPriceController,
               decoration: const InputDecoration(
@@ -47,7 +51,6 @@ class CreateBooking extends StatelessWidget {
               ),
             ),
             TextField(
-              maxLines: null,
               controller: controller.dateController,
               decoration: const InputDecoration(
                 labelText: 'fecha',

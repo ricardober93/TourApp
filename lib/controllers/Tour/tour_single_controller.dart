@@ -1,36 +1,27 @@
 import 'package:get/get.dart';
-import 'package:myapp/controllers/Favorites/favorites_controller.dart';
 import 'package:myapp/controllers/User/user_controller.dart';
 import 'package:myapp/models/tour_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class TourController extends GetxController {
-  Rx<List<Tour>> tours = Rx<List<Tour>>([]);
-
+class TourSingleController extends GetxController {
+   final Rx<Tour> tour = Tour(
+    id: 0,
+    name: "",
+    description: "",
+    price: 0,
+    image: "",
+    date: DateTime.now().toIso8601String(),
+    location: "",
+    duration: '',
+    currency: 'COP'
+   ).obs;
 
   RxBool isBooked = false.obs;
-  FavoritesController favoriteController = Get.put(FavoritesController());
+  RxBool isLoading = false.obs;
+
   UserController userController = Get.put(UserController());
 
   final SupabaseClient client = Supabase.instance.client;
-
-  get tour => null;
-
-  getTours() async {
-    var res = await client.from('tours').select('*');
-
-    tours.value.clear();
-
-    for (var element in res) {
-      tours.value.add(Tour.fromJson(element));
-    }
-
-    tours.refresh();
-  }
-
-  navigateSinglertour(int tourId) {
-    Get.toNamed("/tour/${tourId.toString()}");
-  }
 
   getTour(tourId) async {
     return await client.from('tours').select('*').eq('id', tourId).single();
@@ -48,6 +39,7 @@ class TourController extends GetxController {
   }
 
   getSingleTour() async {
+    isLoading.value = true;
     isBooked.value = false;
     String? tourId = Get.parameters['tourId'] ?? "";
 
@@ -57,27 +49,15 @@ class TourController extends GetxController {
         isBooked.value = true;
       }
       var res = await getTour(tourId);
-      return Tour.fromJson(res);
+      tour.value = Tour.fromJson(res);
+      tour.refresh();
+      isLoading.value = false;
     }
-
-    return null;
   }
 
   @override
-  void onInit() {
-    getTours();
+  void onInit() async {
+    await getSingleTour();
     super.onInit();
-  }
-
-  void favorited(int tourId) async {
-    final userId = userController.user?.id ?? "";
-    final isFavorite = favoriteController.isFavorite(tourId);
-
-    if (userId.isNotEmpty && !isFavorite) {
-      favoriteController.setFavorite(tourId, userId);
-    }
-    if (userId.isNotEmpty && isFavorite) {
-      favoriteController.deleteFavorite(tourId, userId);
-    }
   }
 }

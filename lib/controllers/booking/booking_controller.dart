@@ -8,9 +8,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class BookingController extends GetxController {
   final SupabaseClient client = Supabase.instance.client;
   UserController userController = Get.put(UserController());
-  
-  RxList<Booking> bookings = <Booking>[].obs;
 
+  RxList<Booking> bookings = <Booking>[].obs;
 
   var dateController = TextEditingController();
   var numberPeopleController = TextEditingController(text: '1');
@@ -21,9 +20,8 @@ class BookingController extends GetxController {
     getAllBookings();
     super.onInit();
   }
-  
 
-    @override
+  @override
   void onClose() {
     dateController.dispose();
     numberPeopleController.dispose();
@@ -32,25 +30,16 @@ class BookingController extends GetxController {
     super.onClose();
   }
 
-
-
   getAllBookings() async {
-
     var userId = userController.user?.id;
     var res = await client
         .from('bookings')
         .select('*, tours(*)')
         .eq('user_id', userId!);
 
-        print(res);
+    bookings = res.map((e) => Booking.fromJson(e)).toList().obs;
 
- bookings.clear();
- 
-      for (var book in res) {
-        bookings.add(Booking.fromJson(book));
-      }
-
-      bookings.refresh();
+    bookings.refresh();
   }
 
   Future<Booking> getBooking(tourId) async {
@@ -65,8 +54,6 @@ class BookingController extends GetxController {
     Booking bookingModel = Booking.fromJson(res);
     return bookingModel;
   }
-
-
 
   setBooking(tourId) {
     var userId = userController.user?.id;
@@ -88,17 +75,18 @@ class BookingController extends GetxController {
     }
   }
 
-
   void clearItem() {
     numberPeopleController.clear();
     totalPriceController.clear();
     dateController.clear();
   }
 
-  calculateTotalPrice(totalPrice) {
+  calculateTotalPrice() {
     if (numberPeopleController.text.isNotEmpty) {
-      totalPriceController.text =
-          (int.parse(numberPeopleController.text) * totalPrice).toString().split('.')[0];
+      totalPriceController.text = (
+        int.parse(numberPeopleController.text) *
+           int.parse(totalPriceController.text.split('.')[0])
+      ).toString();
     }
 
     if (totalPriceController.text.isEmpty || totalPriceController.text == '0') {
